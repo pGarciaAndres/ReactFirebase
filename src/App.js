@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
+import FileUpload from './FileUpload';
 import logo from './logo.svg';
 import './App.css';
 
@@ -52,13 +53,14 @@ class App extends Component {
         <div>
           <img className="Url-photo" src={this.state.user.photoURL} alt={this.state.user.displayName} />
           <p>Welcome {this.state.user.displayName}!</p>
+          <FileUpload />
           <button onClick={this.handleLogout}>Log out</button>
         </div>
       );
     } else {
       return (
-      //If user is not logged
-      <button onClick={this.handleAuth}>Log in</button>
+        //If user is not logged
+        <button onClick={this.handleAuth}>Log in</button>
       );
     }
   }
