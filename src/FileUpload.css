@@ -23,6 +23,12 @@
     transition: width 0.6s;
 }
 
-.image-gallery:hover {
-    width: 250px;
+.progress-bar {
+    width: 150px;
+    height: 10px;
+    vertical-align: top;
 }
+
+/* .image-gallery:hover {
+    width: 250px;
+} */

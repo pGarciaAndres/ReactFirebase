@@ -7,6 +7,7 @@ class FileUpload extends Component {
     constructor() {
         super();
         this.state = {
+            uploadValue: 0,
             picture: null
         };
 
@@ -23,9 +24,17 @@ class FileUpload extends Component {
             const task = storageRef.put(file);
             //Firebase utility to receive the file status.
             task.on('state_changed', snapshot => {
-                this.setState({ picture: task.snapshot.downloadURL});
+                let percentage = (snapshot.bytesTransferred /snapshot.totalBytes) * 100;
+                this.setState({
+                    uploadValue: percentage
+                })
             }, error => { 
                 console.log(error.message);
+            }, () => { //Image already uploaded.
+                this.setState({
+                    uploadValue: 100,
+                    picture: task.snapshot.downloadURL
+                });
             });
         }
     }
@@ -48,6 +57,9 @@ class FileUpload extends Component {
                 </label>
                 <input id="file-input" type="file" onChange={this.handleUpload}/>
                 { this.showNewImage() }
+                <br/>
+                {/* <progress className="progress-bar" value={this.state.uploadValue} max="100"></progress> */}
+                
             </div>
         );
     }
