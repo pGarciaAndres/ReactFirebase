@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import firebase from 'firebase';
 import FileUpload from './FileUpload';
 import logo from './logo.svg';
+import admin from './admin.png';
 import './App.css';
 
 class App extends Component {
@@ -11,7 +12,8 @@ class App extends Component {
     //In React, components have state!
     //React state: If change, the component will be reloaded! (Interesting)
     this.state = {
-      user: null
+      user: null,
+      error: null
     };
 
     this.handleAuth = this.handleAuth.bind(this);
@@ -21,46 +23,55 @@ class App extends Component {
   //Life cicle method launched when component is rendered in DOM (Firebase Listener).
   componentWillMount() {
     firebase.auth().onAuthStateChanged(user => {
-      // this.setState({
-      //   user: user
-      // });
+      this.setState({ 
+        user: user,
+        error: null
+      });
 
       //Awesome ES6 Syntax: If user == new user, will not change and eoc will be overwrited.
-      this.setState({ user });
+      // this.setState({ user });
     });
   }
   
-  handleAuth() {
-    //Google login provider
-    const provider = new firebase.auth.GoogleAuthProvider();
-    //This return a promise...
-    firebase.auth().signInWithPopup(provider)
-      //Now we are using ES6 (ArrowFunction & TemplateString)
-      .then(result => console.log(`${result.user.email} has logged in!`))
-      .catch(error => console.log(`Error ${error.code}: ${error.message}`));
+  handleAuth(event) {
+    //Email & Password provider
+    var email = 'garciandres.15@gmail.com';
+    var password = this.refs.password.value;
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then(result => console.log(`Admin has logged in!`))
+      .catch(error => {
+        console.log(`Error ${error.code}: ${error.message}`);
+        this.setState({
+          error: `Invalid password`
+        });
+      });
   }
 
   handleLogout() {
     firebase.auth().signOut()
-      .then(result => console.log(`${result.user.email} has logged out!`))
+      .then(result => console.log(`Admin has logged out!`))
       .catch(error => console.log(`Error ${error.code}: ${error.message}`));
   }
 
   renderLoginButton() {
-    //If user is logged
     if (this.state.user) {
+      //If user is logged
       return (
         <div>
-          <img className="Url-photo" src={this.state.user.photoURL} alt={this.state.user.displayName} />
-          <p>Welcome {this.state.user.displayName}!</p>
+          <img className="Url-photo" src={admin} alt={this.state.user.email} />
+          <span>Welcome Administrator!</span>
+          <button className="logout" onClick={this.handleLogout}>Log out</button>
           <FileUpload />
-          <button onClick={this.handleLogout}>Log out</button>
         </div>
       );
     } else {
+      //If user is not logged
       return (
-        //If user is not logged
-        <button onClick={this.handleAuth}>Log in</button>
+        <div>
+          <em htmlFor="password">{this.state.error}<br/>
+          <input type="password" placeholder="Password" id="password" ref="password"/></em>
+          <button onClick={this.handleAuth}>Admin</button>
+        </div>
       );
     }
   }

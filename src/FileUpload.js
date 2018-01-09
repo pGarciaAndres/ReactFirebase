@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
+import addImage from './add-image.png';
+import './FileUpload.css';
 
 class FileUpload extends Component {
     constructor() {
         super();
         this.state = {
-            uploadValue: 0,
             picture: null
         };
 
@@ -13,37 +14,40 @@ class FileUpload extends Component {
     }
 
     handleUpload(event) {
-        //Get the file from the event.
-        const file = event.target.files[0];
-        //Receive the reference.
-        const storageRef = firebase.storage().ref(`/images/${file.name}`);
-        //Task to upload the file to Firebase.
-        const task = storageRef.put(file);
-        //Firebase utility to receive the file status.
-        task.on('state_changed', snapshot => {
-            let percentage = (snapshot.bytesTransferred /snapshot.totalBytes) * 100;
-            this.setState({
-                uploadValue: percentage
-            })
-        }, error => { 
-            console.log(error.message);
-        }, () => { //Image already uploaded.
-            this.setState({
-                uploadValue: 100,
-                picture: task.snapshot.downloadURL
+        if (event.target.files.length) {
+            //Get the file from the event.
+            const file = event.target.files[0];
+            //Receive the reference.
+            const storageRef = firebase.storage().ref(`/images/${file.name}`);
+            //Task to upload the file to Firebase.
+            const task = storageRef.put(file);
+            //Firebase utility to receive the file status.
+            task.on('state_changed', snapshot => {
+                this.setState({ picture: task.snapshot.downloadURL});
+            }, error => { 
+                console.log(error.message);
             });
-        });
+        }
+    }
+
+    showNewImage() {
+        if (this.state.picture) {
+            return (
+                <img className="image-gallery" src={this.state.picture} alt=""/>
+            );
+        }
     }
 
     render() {
         return(
-            <div>
-                <p>Upload an image:</p>
-                <progress value={this.state.uploadValue} max="100"></progress>
+            <div className="upload-image">
                 <br/>
-                <input type="file" onChange={this.handleUpload}/>
                 <br/>
-                <img width="320" src={this.state.picture} alt=""/>
+                <label htmlFor="file-input">
+                    <img className="add-image" src={addImage} alt=""/>
+                </label>
+                <input id="file-input" type="file" onChange={this.handleUpload}/>
+                { this.showNewImage() }
             </div>
         );
     }

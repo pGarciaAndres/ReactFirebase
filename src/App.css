@@ -30,5 +30,19 @@
 }
 
 .Url-photo {
-  width: 100px;
+  width: 40px;
+  vertical-align: bottom;
+  padding-right: 5px;
+}
+
+.logout {
+  vertical-align: text-bottom;
+  margin-left: 5px;
+}
+
+em {
+  text-align: left;
+  display: inline-block;
+  color: #D8000C;
+  font-size: smaller;
 }
