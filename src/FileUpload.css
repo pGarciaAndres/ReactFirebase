@@ -1,26 +1,23 @@
+.upload-image {
+    display: inline-block;
+}
+
 .upload-image > input {
     display: none;
 }
 
 .add-image {
     width: 150px;
-    opacity: 0.3;
+    opacity: 0.2;
     border: 1px solid #aaa;
     border-radius: 10px;
     cursor: pointer;
     vertical-align: middle;
+    transition: opacity 0.25s ease-in-out;
 }
 
 .add-image:hover {
-    opacity: 0.35;
-}
-
-.image-gallery {
-    width: 150px;
-    border-radius: 10px;
-    margin-left: 10px;
-    vertical-align: middle;
-    transition: width 0.6s;
+    opacity: 0.15;
 }
 
 .progress-bar {
@@ -28,7 +25,3 @@
     height: 10px;
     vertical-align: top;
 }
-
-/* .image-gallery:hover {
-    width: 250px;
-} */

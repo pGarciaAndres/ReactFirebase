@@ -46,3 +46,15 @@ em {
   color: #D8000C;
   font-size: smaller;
 }
+
+.image-gallery {
+  width: 150px;
+  border-radius: 10px;
+  margin-left: 10px;
+  vertical-align: middle;
+  transition: width 0.4s;
+}
+
+.image-gallery:hover {
+  width: 200px;
+}
