@@ -29,6 +29,10 @@
   to { transform: rotate(360deg); }
 }
 
+.login {
+  padding-bottom: 75px;
+}
+
 .Url-photo {
   width: 40px;
   vertical-align: bottom;
@@ -45,16 +49,4 @@ em {
   display: inline-block;
   color: #D8000C;
   font-size: smaller;
-}
-
-.image-gallery {
-  width: 150px;
-  border-radius: 10px;
-  margin-left: 10px;
-  vertical-align: middle;
-  transition: width 0.4s;
-}
-
-.image-gallery:hover {
-  width: 200px;
 }

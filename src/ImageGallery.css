@@ -1,0 +1,15 @@
+.image-gallery {
+    display: inline-block;
+}
+
+.image {
+    width: 150px;
+    border-radius: 10px;
+    margin-left: 10px;
+    vertical-align: middle;
+    transition: width 0.4s;
+  }
+  
+  .image:hover {
+    width: 200px;
+  }
