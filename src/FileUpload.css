@@ -23,5 +23,5 @@
 .progress-bar {
     width: 150px;
     height: 10px;
-    vertical-align: top;
+    display: block;
 }

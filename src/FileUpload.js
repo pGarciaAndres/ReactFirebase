@@ -5,9 +5,16 @@ import './FileUpload.css';
 class FileUpload extends Component {
     constructor() {
         super();
-        this.state = {
-            uploadValue: 0
-        };
+
+        this.renderProgressBar = this.renderProgressBar.bind(this);
+    }
+
+    renderProgressBar() {
+        if (this.props.uploadValue > 0 && this.props.uploadValue < 100 ) {
+            return(
+                <progress className="progress-bar" value={this.props.uploadValue} max="100"></progress>
+            );
+        }
     }
 
     render() {
@@ -17,7 +24,7 @@ class FileUpload extends Component {
                     <img className="add-image" src={ addImage } alt=""/>
                 </label>
                 <input id="file-input" type="file" onChange={ this.props.onUpload }/>
-                {/* <progress className="progress-bar" value={this.state.uploadValue} max="100"></progress> */}
+                { this.renderProgressBar() }
             </div>
         );
     }
