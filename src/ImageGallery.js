@@ -78,15 +78,22 @@ class ImageGallery extends Component {
         }
     }
 
+    handleZoomImage(event) {
+        return(
+            <div>
+                hola
+            </div>
+        );
+    }
+
     render() {
         return(
             <div className="image-gallery">
                 { this.renderFileUploadButton() }
                 { this.state.images.map(image => ( 
-                    <img className="image" src={ image.image } key={ image.id } alt="" onClick={ this.handleRemove } /> 
+                    <img className="image" src={ image.image } key={ image.id } alt="" onClick={ this.handleZoomImage } />
                   )).reverse() }
             </div>
-
         );
     }
 }

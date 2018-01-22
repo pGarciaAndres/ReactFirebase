@@ -18,6 +18,7 @@ class App extends Component {
       images: [] 
     };
 
+    this.userLogin = 'garciandres.15@gmail.com';
     this.handleAuth = this.handleAuth.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
   }
@@ -40,7 +41,7 @@ class App extends Component {
    */
   handleAuth(event) {
     //Email & Password provider
-    var email = 'garciandres.15@gmail.com';
+    var email = this.userLogin;
     var password = this.refs.password.value;
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(result => console.log(`Admin has logged in!`))

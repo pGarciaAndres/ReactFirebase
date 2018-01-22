@@ -7,9 +7,12 @@
     border-radius: 10px;
     margin-left: 10px;
     vertical-align: middle;
-    transition: width 0.4s;
+    transition: width 0.4s, opacity 0.25s ease-in-out;
+    cursor: pointer;
   }
   
   .image:hover {
     width: 200px;
+    opacity: 0.7;
+
   }
