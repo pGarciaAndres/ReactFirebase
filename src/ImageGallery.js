@@ -55,7 +55,7 @@ class ImageGallery extends Component {
     }
 
     handleUpload(event) {
-        if (event.target.files.length) {
+        if (event && event.target && event.target.files.length) {
             //Get the file from the event.
             const file = event.target.files[0];
             //Receive the reference.
@@ -68,7 +68,7 @@ class ImageGallery extends Component {
                 this.setState({
                     uploadValue: percentage
                 });
-            }, error => { 
+            }, error => {
                 console.log(error.message);
             }, () => { //Image already uploaded.
                 const record = {
@@ -79,8 +79,18 @@ class ImageGallery extends Component {
     
                 const dbRef = firebase.database().ref('images');
                 const newImage = dbRef.push();
+                // newImage.set(record);
+
+                //Chapuza - After login don't refresh image list, but the image is uploaded.
+                const prev = this.state.images.length;
                 newImage.set(record);
-                this.forceUpdate();
+                const post = this.state.images.length;
+                if (post === prev) {
+                    this.setState({
+                        images: this.state.images.concat(record)
+                    });
+                }
+                //end Chapuza
             });
         }
     }

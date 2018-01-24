@@ -35,10 +35,6 @@ class App extends Component {
     });
   }
 
-  /**
-   * Handle Authentication
-   * @param {*} event 
-   */
   handleAuth(event) {
     //Email & Password provider
     var email = this.userLogin;
