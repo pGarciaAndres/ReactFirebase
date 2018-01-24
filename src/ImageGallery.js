@@ -1,7 +1,24 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import FileUpload from './FileUpload';
+import Modal from 'react-modal';
 import './ImageGallery.css';
+import addImage from './add-image.png';
+import removeImage from './remove-image.png';
+
+const customStyles = {
+    content : {
+        position    : 'absolute',
+        top         : '50%',
+        right       : 'auto',
+        bottom      : 'auto',
+        left        : '50%',
+        transform   : 'translate(-50%, -50%)',
+        background  : 'none',
+        border      : 'none',
+        overflow    : 'visible'
+    }
+};
 
 class ImageGallery extends Component {
     constructor() {
@@ -9,14 +26,19 @@ class ImageGallery extends Component {
 
         this.state = {
             uploadValue: 0,
-            images: [] 
+            images: [],
+            openImage: null
         };
 
         this.handleUpload = this.handleUpload.bind(this);
         this.handleRemove = this.handleRemove.bind(this);
+        this.openModalImage = this.openModalImage.bind(this);
+        this.openImage = this.openImage.bind(this);
+        this.closeImage = this.closeImage.bind(this);
     }
 
     componentWillMount() {
+        Modal.setAppElement('body');
         firebase.database().ref('images').on('child_added', snapshot => {
             this.setState({
                 images: this.state.images.concat(snapshot.val())
@@ -58,32 +80,60 @@ class ImageGallery extends Component {
                 const dbRef = firebase.database().ref('images');
                 const newImage = dbRef.push();
                 newImage.set(record);
+                this.forceUpdate();
             });
         }
     }
 
-    handleRemove(event) {
-        if (event.target) {
+    openModalImage() {
+        if (this.props.user) {
+            return (
+                <Modal 
+                isOpen={ this.state.openImage!==null }
+                onRequestClose={ this.closeImage } onUpload={ this.handleRemove }
+                style={ customStyles }
+                contentLabel="Image Modal">
+                  <img className="image-zoom" src={ this.state.openImage } alt="" />
+                  <img className="close-button" src={ addImage } alt="Close" onClick={ this.closeImage } />
+                  <img className="remove-button" src={ removeImage } alt="Eliminar" onClick={ this.handleRemove } />
+              </Modal>
+            );
+        } else {
+            return (
+                <Modal 
+                isOpen={ this.state.openImage!==null }
+                onRequestClose={ this.closeImage } onUpload={ this.handleRemove }
+                style={ customStyles }
+                contentLabel="Image Modal">
+                  <img className="image-zoom" src={ this.state.openImage } alt="" />
+                  <img className="close-button" src={ addImage } alt="Close" onClick={ this.closeImage } />
+              </Modal>
+            );
+        }
+    }
+
+    openImage(event) {
+        this.setState({ openImage: event.target.src });
+    }
+
+    closeImage() {
+        this.setState({ openImage: null });
+    }
+
+    handleRemove() {
+        if (this.state.openImage) {
             var file = null;
-            const src = event.target.src;
+            const src = this.state.openImage;
             const dbRef = firebase.database().ref('images');
             dbRef.orderByChild('image').equalTo(src).on('child_added', snapshot => {
                 file = snapshot.val();
                 snapshot.ref.remove();
-            });
-            
-            this.setState({
-                images: this.state.images.filter(image => image.id !== file.id)
+                this.setState({
+                    openImage: null,
+                    images: this.state.images.filter(image => image.id !== file.id)
+                });
             });
         }
-    }
-
-    handleZoomImage(event) {
-        return(
-            <div>
-                hola
-            </div>
-        );
     }
 
     render() {
@@ -91,8 +141,10 @@ class ImageGallery extends Component {
             <div className="image-gallery">
                 { this.renderFileUploadButton() }
                 { this.state.images.map(image => ( 
-                    <img className="image" src={ image.image } key={ image.id } alt="" onClick={ this.handleZoomImage } />
+                    <img className="image" src={ image.image } key={ image.id } alt="" 
+                    onClick={ this.openImage } />
                   )).reverse() }
+                { this.openModalImage() }
             </div>
         );
     }
