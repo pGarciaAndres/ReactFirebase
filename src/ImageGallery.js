@@ -81,7 +81,7 @@ class ImageGallery extends Component {
                 const newImage = dbRef.push();
                 // newImage.set(record);
 
-                //Chapuza - After login don't refresh image list, but the image is uploaded.
+                //Chapuza - After login and upload an image don't refresh image list, but the image is uploaded.
                 const prev = this.state.images.length;
                 newImage.set(record);
                 const post = this.state.images.length;

@@ -17,13 +17,17 @@ class FileUpload extends Component {
         }
     }
 
+    readImage(event) {
+        this.props.onUpload(event);
+    }
+
     render() {
         return(
             <div className="upload-image">
                 <label htmlFor="file-input">
                     <img className="add-image" src={ addImage } alt=""/>
                 </label>
-                <input id="file-input" type="file" onChange={ this.props.onUpload }/>
+                <input id="file-input" type="file" onChange={ this.props.onUpload } onClick={(event)=> { event.target.value = null }}/>
                 { this.renderProgressBar() }
             </div>
         );
