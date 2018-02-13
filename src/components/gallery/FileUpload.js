@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import addImage from './add-image.png';
+import React from 'react';
+import addImage from '../../images/add-image.png';
 import './FileUpload.css';
 
-class FileUpload extends Component {
+export default class FileUpload extends React.Component {
     constructor() {
         super();
 
@@ -33,5 +33,3 @@ class FileUpload extends Component {
         );
     }
 }
-
-export default FileUpload;  

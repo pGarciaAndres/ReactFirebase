@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import firebase from 'firebase';
 import FileUpload from './FileUpload';
+import AdminLogin from '../authentication/AdminLogin';
 import Modal from 'react-modal';
 import './ImageGallery.css';
-import addImage from './add-image.png';
-import removeImage from './remove-image.png';
+import addImage from '../../images/add-image.png';
+import removeImage from '../../images/remove-image.png';
 
 const customStyles = {
     content : {
@@ -20,7 +21,7 @@ const customStyles = {
     }
 };
 
-class ImageGallery extends Component {
+export default class ImageGallery extends React.Component {
     constructor() {
         super();
 
@@ -149,6 +150,7 @@ class ImageGallery extends Component {
     render() {
         return(
             <div className="image-gallery">
+                <AdminLogin user={ this.props.user } />
                 { this.renderFileUploadButton() }
                 { this.state.images.map(image => ( 
                     <img className="image" src={ image.image } key={ image.id } alt="" 
@@ -159,5 +161,3 @@ class ImageGallery extends Component {
         );
     }
 }
-
-export default ImageGallery;
