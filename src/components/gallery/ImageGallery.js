@@ -3,7 +3,7 @@ import firebase from 'firebase';
 import FileUpload from './FileUpload';
 import AdminLogin from '../authentication/AdminLogin';
 import Modal from 'react-modal';
-import './ImageGallery.css';
+const classNames = require('./ImageGallery.css');
 import addImage from '../../images/add-image.png';
 import removeImage from '../../images/remove-image.png';
 
@@ -104,9 +104,9 @@ export default class ImageGallery extends React.Component {
                 onRequestClose={ this.closeImage } onUpload={ this.handleRemove }
                 style={ customStyles }
                 contentLabel="Image Modal">
-                  <img className="image-zoom" src={ this.state.openImage } alt="" />
-                  <img className="close-button" src={ addImage } alt="Close" onClick={ this.closeImage } />
-                  <img className="remove-button" src={ removeImage } alt="Eliminar" onClick={ this.handleRemove } />
+                  <img className={classNames.imageZoom} src={ this.state.openImage } alt="" />
+                  <img className={classNames.closeButton} src={ addImage } alt="Close" onClick={ this.closeImage } />
+                  <img className={classNames.removeButton} src={ removeImage } alt="Eliminar" onClick={ this.handleRemove } />
               </Modal>
             );
         } else {
@@ -116,8 +116,8 @@ export default class ImageGallery extends React.Component {
                 onRequestClose={ this.closeImage } onUpload={ this.handleRemove }
                 style={ customStyles }
                 contentLabel="Image Modal">
-                  <img className="image-zoom" src={ this.state.openImage } alt="" />
-                  <img className="close-button" src={ addImage } alt="Close" onClick={ this.closeImage } />
+                  <img className={classNames.imageZoom} src={ this.state.openImage } alt="" />
+                  <img className={classNames.closeButton} src={ addImage } alt="Close" onClick={ this.closeImage } />
               </Modal>
             );
         }
@@ -149,11 +149,11 @@ export default class ImageGallery extends React.Component {
 
     render() {
         return(
-            <div className="image-gallery">
+            <div className={classNames.imageGallery}>
                 <AdminLogin user={ this.props.user } />
                 { this.renderFileUploadButton() }
                 { this.state.images.map(image => ( 
-                    <img className="image" src={ image.image } key={ image.id } alt="" 
+                    <img className={classNames.image} src={ image.image } key={ image.id } alt="" 
                     onClick={ this.openImage } />
                   )).reverse() }
                 { this.openModalImage() }

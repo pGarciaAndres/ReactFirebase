@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import firebase from 'firebase';
 import './index.css';
 import App from './App';
-import registerServiceWorker from './registerServiceWorker';
 
 //Firebase configuration
 firebase.initializeApp({
@@ -15,5 +14,4 @@ firebase.initializeApp({
     messagingSenderId: "806980862354"
 });
 
-ReactDOM.render(<App />, document.getElementById('root'));
-registerServiceWorker();
+ReactDOM.render(<App/>, document.getElementById('root'));

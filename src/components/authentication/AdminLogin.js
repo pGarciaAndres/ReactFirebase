@@ -1,6 +1,7 @@
 import React from 'react';
 import firebase from 'firebase';
 import admin from '../../images/admin.png';
+const classNames = require('./App.css');
 
 export default class AdminLogin extends React.Component {
 
@@ -40,15 +41,15 @@ export default class AdminLogin extends React.Component {
         //Check login status
         if (this.props.user) {
             return (
-                <div className="login">
-                    <img className="Url-photo" src={admin} alt={this.props.user.email} />
+                <div className={classNames.login}>
+                    <img className={classNames.urlPhoto} src={admin} alt={this.props.user.email} />
                     <span>Welcome Administrator!</span>
-                    <button className="logout" onClick={this.handleLogout}>Log out</button>
+                    <button className={classNames.logout} onClick={this.handleLogout}>Log out</button>
                 </div>
             );
         } else {
             return (
-                <div className="login">
+                <div className={classNames.login}>
                     <em htmlFor="password">{this.state.error}<br />
                         <input type="password" placeholder="Password" id="password" ref="password" /></em>
                     <button onClick={this.handleAuth}>Admin</button>

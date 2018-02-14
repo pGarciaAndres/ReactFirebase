@@ -1,4 +1,4 @@
-.image-gallery {
+.imageGallery {
     display: inline-block;
 }
 
@@ -16,11 +16,11 @@
     opacity: 0.8;
   }
 
-  .image-zoom {
+  .imageZoom {
     width: 100%;
   }
 
-  .close-button {
+  .closeButton {
     position: absolute;
     width: 50px;
     transform: rotate(45deg);
@@ -29,11 +29,11 @@
     transition: transform 0.2s linear;
   }
 
-  .close-button:hover {
+  .closeButton:hover {
     transform: rotate(135deg);
   }
 
-  .remove-button {
+  .removeButton {
     position: absolute;
     margin-top: 60px;
     margin-left: -2px;
@@ -43,7 +43,7 @@
     transition: transform 0.2s linear;
   }
 
-  .remove-button:hover {
+  .removeButton:hover {
     transform: rotate(30deg);
     filter: sepia(100%) saturate(10000%) hue-rotate(0deg);
   }

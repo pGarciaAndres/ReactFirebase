@@ -1,12 +1,12 @@
-.upload-image {
+.uploadImage {
     display: inline-block;
 }
 
-.upload-image > input {
+.uploadImage > input {
     display: none;
 }
 
-.add-image {
+.addImage {
     width: 150px;
     opacity: 0.2;
     border: 1px solid #aaa;
@@ -16,11 +16,11 @@
     transition: opacity 0.25s ease-in-out;
 }
 
-.add-image:hover {
+.addImage:hover {
     opacity: 0.15;
 }
 
-.progress-bar {
+.progressBar {
     width: 150px;
     height: 10px;
     display: block;

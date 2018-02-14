@@ -13,7 +13,7 @@ module.exports = {
   },
 
   entry: [
-    './main.tsx',
+    './index.js',
     '../node_modules/bootstrap/dist/css/bootstrap.css'
   ],
   output: {
@@ -34,10 +34,7 @@ module.exports = {
     loaders: [
       {
         test: /\.js$/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['es2015']
-        }
+        loader: 'babel-loader'
       }
     ],
     rules: [
@@ -46,10 +43,7 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader',
         options: {
-          useBabel: true,
-        },
-        query: {
-          presets: ['es2015']
+          presets: ['react']
         }
       },
       {

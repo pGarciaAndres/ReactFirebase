@@ -1,6 +1,6 @@
 import React from 'react';
 import addImage from '../../images/add-image.png';
-import './FileUpload.css';
+const classNames = require('./FileUpload.css');
 
 export default class FileUpload extends React.Component {
     constructor() {
@@ -12,7 +12,7 @@ export default class FileUpload extends React.Component {
     renderProgressBar() {
         if (this.props.uploadValue > 0 && this.props.uploadValue < 100 ) {
             return(
-                <progress className="progress-bar" value={this.props.uploadValue} max="100"></progress>
+                <progress className={classNames.progressBar} value={this.props.uploadValue} max="100"></progress>
             );
         }
     }
@@ -23,9 +23,9 @@ export default class FileUpload extends React.Component {
 
     render() {
         return(
-            <div className="upload-image">
+            <div className={classNames.uploadImage}>
                 <label htmlFor="file-input">
-                    <img className="add-image" src={ addImage } alt=""/>
+                    <img className={classNames.addImage} src={ addImage } alt=""/>
                 </label>
                 <input id="file-input" type="file" onChange={ this.props.onUpload } onClick={(event)=> { event.target.value = null }}/>
                 { this.renderProgressBar() }
