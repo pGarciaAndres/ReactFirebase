@@ -1,0 +1,24 @@
+.login {
+    padding-bottom: 75px;
+}
+  
+.urlPhoto {
+width: 40px;
+vertical-align: bottom;
+padding-right: 5px;
+}
+
+.loginButton {
+margin-left: 5px;
+}
+
+.logoutButton {
+margin-left: 5px;
+}
+
+em {
+text-align: left;
+display: inline-block;
+color: #D8000C;
+font-size: smaller;
+}

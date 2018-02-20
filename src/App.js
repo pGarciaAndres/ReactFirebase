@@ -1,7 +1,7 @@
 import React from 'react';
 import firebase from 'firebase';
 import ImageGallery from './components/gallery/ImageGallery';
-import logo from './images/logo.svg';
+import logo from './images/logo.png';
 const classNames = require('./App.css');
 
 export default class App extends React.Component {

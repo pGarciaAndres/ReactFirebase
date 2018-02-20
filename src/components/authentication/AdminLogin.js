@@ -1,7 +1,7 @@
 import React from 'react';
 import firebase from 'firebase';
 import admin from '../../images/admin.png';
-const classNames = require('./App.css');
+const classNames = require('./AdminLogin.css');
 
 export default class AdminLogin extends React.Component {
 
@@ -44,7 +44,7 @@ export default class AdminLogin extends React.Component {
                 <div className={classNames.login}>
                     <img className={classNames.urlPhoto} src={admin} alt={this.props.user.email} />
                     <span>Welcome Administrator!</span>
-                    <button className={classNames.logout} onClick={this.handleLogout}>Log out</button>
+                    <button className={classNames.logoutButton} onClick={this.handleLogout}>Log out</button>
                 </div>
             );
         } else {
@@ -52,7 +52,7 @@ export default class AdminLogin extends React.Component {
                 <div className={classNames.login}>
                     <em htmlFor="password">{this.state.error}<br />
                         <input type="password" placeholder="Password" id="password" ref="password" /></em>
-                    <button onClick={this.handleAuth}>Admin</button>
+                    <button className={classNames.loginButton} onClick={this.handleAuth}>Admin</button>
                 </div>
             );
         }
