@@ -1,24 +1,35 @@
-.login {
+.loginContainer {
+    display: inline-block;
+}
+
+.logIn {
+    padding-top: 15px;
     padding-bottom: 75px;
+}
+
+.logOut {
+    padding-bottom: 75px;
+}
+
+.logIn button {
+    margin-left: 5px;
+    padding: 0px 15px;
+}
+
+.logOut button {
+    border-radius: 0 5px 5px 0;
 }
   
 .urlPhoto {
-width: 40px;
-vertical-align: bottom;
-padding-right: 5px;
-}
-
-.loginButton {
-margin-left: 5px;
-}
-
-.logoutButton {
-margin-left: 5px;
+    width: 40px;
+    vertical-align: bottom;
+    padding-right: 5px;
 }
 
 em {
-text-align: left;
-display: inline-block;
-color: #D8000C;
-font-size: smaller;
+    text-align: left;
+    display: inline-block;
+    color: #D8000C;
+    font-size: smaller;
+    width: 100%;
 }

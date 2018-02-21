@@ -153,14 +153,16 @@ export default class ImageGallery extends React.Component {
 
     render() {
         return(
-            <div className={classNames.imageGallery}>
+            <div>
                 <AdminLogin user={ this.props.user } />
-                { this.renderFileUploadButton() }
-                { this.state.images.map(image => ( 
-                    <img className={classNames.image} src={ image.image } key={ image.id } alt="" 
-                    onClick={ this.openImage } />
-                  )).reverse() }
-                { this.openModalImage() }
+                <div>
+                    { this.renderFileUploadButton() }
+                    { this.state.images.map(image => ( 
+                        <img className={classNames.image} src={ image.image } key={ image.id } alt="" 
+                        onClick={ this.openImage } />
+                    )).reverse() }
+                    { this.openModalImage() }
+                </div>
             </div>
         );
     }

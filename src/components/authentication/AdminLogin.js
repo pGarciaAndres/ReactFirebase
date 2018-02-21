@@ -53,18 +53,20 @@ export default class AdminLogin extends React.Component {
         //Check login status
         if (this.props.user) {
             return (
-                <div className={classNames.login}>
+                <div className={classNames.logIn}>
                     <img className={classNames.urlPhoto} src={admin} alt={this.props.user.email} />
                     <span>Welcome Administrator!</span>
-                    <button className={classNames.logoutButton} onClick={this.handleLogout}>Log out</button>
+                    <button className="btn btn-default active" onClick={this.handleLogout}>Log out</button>
                 </div>
             );
         } else {
             return (
-                <div className={classNames.login}>
-                    <em htmlFor="password">{this.state.error}<br />
-                        <input type="password" placeholder="Password" ref="password" onKeyPress={this.handleLoginKeyPress}/></em>
-                    <button className={classNames.loginButton} onClick={this.handleAuth}>Admin</button>
+                <div className={classNames.logOut}>
+                    <em htmlFor="password">{this.state.error}</em>
+                    <div className="input-group">
+                        <input className="form-control" type="password" placeholder="Password" ref="password" onKeyPress={this.handleLoginKeyPress}/>
+                        <button className="btn" onClick={this.handleAuth}>Admin</button>
+                    </div>
                 </div>
             );
         }
@@ -72,7 +74,7 @@ export default class AdminLogin extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className={classNames.loginContainer}>
                 {this.renderLoginButton()}
             </div>
         );
