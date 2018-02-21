@@ -20,7 +20,7 @@ export default class AdminLogin extends React.Component {
     }
 
     handleLoginKeyPress(event) {
-        if (event.key == 'ENTER') {
+        if (event.key == 'Enter') {
             this.handleAuth(event);
         }
     }
@@ -30,13 +30,17 @@ export default class AdminLogin extends React.Component {
         var email = this.userLogin;
         var password = this.refs.password.value;
         firebase.auth().signInWithEmailAndPassword(email, password)
-            .then(result => console.log(`Admin has logged in!`))
-            .catch(error => {
-                console.log(`Error ${error.code}: ${error.message}`);
-                this.setState({
-                    error: `Invalid password`
-                });
+        .then(result => {
+            console.log(`Admin has logged in!`);
+            this.setState({
+                error: null
             });
+        }).catch(error => {
+            console.log(`Error ${error.code}: ${error.message}`);
+            this.setState({
+                error: `Invalid password`
+            });
+        }).then(() => this.refs.password.value = null);
     }
 
     handleLogout() {
@@ -59,7 +63,7 @@ export default class AdminLogin extends React.Component {
             return (
                 <div className={classNames.login}>
                     <em htmlFor="password">{this.state.error}<br />
-                        <input type="password" placeholder="Password" id="password" ref="password" onKeyPress={this.handleLoginKeyPress}/></em>
+                        <input type="password" placeholder="Password" ref="password" onKeyPress={this.handleLoginKeyPress}/></em>
                     <button className={classNames.loginButton} onClick={this.handleAuth}>Admin</button>
                 </div>
             );
