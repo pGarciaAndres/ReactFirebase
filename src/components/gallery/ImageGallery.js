@@ -39,6 +39,10 @@ export default class ImageGallery extends React.Component {
     }
 
     componentWillMount() {
+        firebase.auth().onAuthStateChanged(user => {
+            //Awesome ES6 Syntax: If user == new user, will not change and eoc will be overwrited.
+            this.setState({ user });
+          });
         Modal.setAppElement('body');
         firebase.database().ref('images').on('child_added', snapshot => {
             this.setState({

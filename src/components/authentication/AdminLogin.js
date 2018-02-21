@@ -1,5 +1,6 @@
 import React from 'react';
 import firebase from 'firebase';
+import keydown from 'react-keydown';
 import admin from '../../images/admin.png';
 const classNames = require('./AdminLogin.css');
 
@@ -15,6 +16,13 @@ export default class AdminLogin extends React.Component {
         this.userLogin = 'garciandres.15@gmail.com';
         this.handleAuth = this.handleAuth.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
+        this.handleLoginKeyPress = this.handleLoginKeyPress.bind(this);
+    }
+
+    handleLoginKeyPress(event) {
+        if (event.key == 'ENTER') {
+            this.handleAuth(event);
+        }
     }
 
     handleAuth(event) {
@@ -51,7 +59,7 @@ export default class AdminLogin extends React.Component {
             return (
                 <div className={classNames.login}>
                     <em htmlFor="password">{this.state.error}<br />
-                        <input type="password" placeholder="Password" id="password" ref="password" /></em>
+                        <input type="password" placeholder="Password" id="password" ref="password" onKeyPress={this.handleLoginKeyPress}/></em>
                     <button className={classNames.loginButton} onClick={this.handleAuth}>Admin</button>
                 </div>
             );
