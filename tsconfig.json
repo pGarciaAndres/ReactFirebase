@@ -8,7 +8,9 @@
         "jsx": "react",
         "sourceMap": true,
         "noLib": false,
-        "suppressImplicitAnyIndexErrors": true
+        "suppressImplicitAnyIndexErrors": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
     },
     "compileOnSave": false,
     "exclude": [
