@@ -2,22 +2,32 @@
     display: inline-block;
 }
 
-.logIn {
+.loggedIn {
     padding-top: 15px;
     padding-bottom: 75px;
 }
 
-.logOut {
+.notLoggedIn {
     padding-bottom: 75px;
 }
 
-.logIn button {
+.loggedIn button {
     margin-left: 5px;
     padding: 0px 15px;
+    transition: opacity 0.15s ease-in-out;
 }
 
-.logOut button {
+.loggedIn button:hover {
+    opacity: 0.8;
+}
+
+.notLoggedIn button {
     border-radius: 0 5px 5px 0;
+    transition: opacity 0.15s ease-in-out;
+}
+
+.notLoggedIn button:hover {
+    opacity: 0.8;
 }
   
 .urlPhoto {
