@@ -2,6 +2,7 @@
     width: 150px;
     border-radius: 10px;
     margin-left: 10px;
+    margin-bottom: 10px;
     vertical-align: middle;
     transition: width 0.4s, opacity 0.25s ease-in-out;
     cursor: pointer;
