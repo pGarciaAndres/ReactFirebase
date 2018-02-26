@@ -1,8 +1,8 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import firebase from 'firebase';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import * as firebase from 'firebase';
 import './index.css';
-import App from './App';
+import { App } from "./app";
 
 //Firebase configuration
 firebase.initializeApp({
@@ -14,4 +14,4 @@ firebase.initializeApp({
     messagingSenderId: "806980862354"
 });
 
-ReactDOM.render(<App/>, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
