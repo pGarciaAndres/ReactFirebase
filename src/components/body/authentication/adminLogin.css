@@ -1,10 +1,11 @@
 .loginContainer {
     display: inline-block;
+    width: 100%;
 }
 
 .loggedIn {
-    padding-top: 15px;
-    padding-bottom: 75px;
+    padding: 1rem 1rem 1rem 0;
+    float: right;
 }
 
 .loggedIn button {
@@ -18,7 +19,8 @@
 }
 
 .notLoggedIn {
-    padding-bottom: 75px;
+    padding: 0 1rem 1rem 0;
+    float: right;
 }
 
 form {
@@ -39,7 +41,7 @@ form input[type=submit]:hover {
 }
   
 .urlPhoto {
-    width: 40px;
+    width: 2.5rem;
     vertical-align: bottom;
     padding-right: 5px;
 }

@@ -2,10 +2,11 @@ import * as React from 'react';
 import * as firebase from 'firebase';
 import * as ReactModal from 'react-modal';
 import { FileUpload } from "./fileUpload";
-import { AdminLogin } from "../authentication/adminLogin";
-const classNames = require('./ImageGallery.css');
-const addImage = require('../../images/add-image.png');
-const removeImage = require('../../images/rm-image.png');
+import { AdminLogin } from "../authentication";
+import { PropagateLoader } from 'react-spinners';
+const classNames = require('./imageGallery.css');
+const addImage = require('../../../images/add-image.png');
+const removeImage = require('../../../images/rm-image.png');
 
 const customStyles = {
     content: {
@@ -22,36 +23,52 @@ const customStyles = {
 };
 
 interface Props {
-    user: Object
 }
 
 interface State {
+    user: Object;
     uploadValue: number;
     images: any[];
     openImage: string;
+    loading: boolean;
 }
 
 export class ImageGallery extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
+            user: null,
             uploadValue: 0,
             images: [],
             openImage: null,
+            loading: true
         }
     }
 
     componentWillMount() {
         ReactModal.setAppElement('body');
-        firebase.database().ref('images').on('child_added', snapshot => {
-            this.setState({
-                images: this.state.images.concat(snapshot.val())
-            });
+        let imageCollection = [];
+        firebase.auth().onAuthStateChanged((user: Object) => {
+            this.setState({ user });
         });
+        firebase.database().ref('images').on('child_added', snapshot => {
+            const record = {
+                id: snapshot.val().id,
+                name: snapshot.val().name,
+                image: snapshot.val().image
+            };
+            imageCollection.push(record);
+        });
+        return setTimeout(() => {
+            this.setState({
+                images: imageCollection,
+                loading: false,
+            });
+        }, 1500);
     }
 
     renderFileUploadButton = () => {
-        if (this.props.user) {
+        if (this.state.user && this.state.loading === false) {
             return (
                 <FileUpload uploadValue={this.state.uploadValue} onUpload={this.handleUpload} />
             );
@@ -97,7 +114,7 @@ export class ImageGallery extends React.Component<Props, State> {
     }
 
     openModalImage = () => {
-        if (this.props.user) {
+        if (this.state.user) {
             return (
                 <ReactModal
                     isOpen={this.state.openImage !== null}
@@ -142,13 +159,16 @@ export class ImageGallery extends React.Component<Props, State> {
     public render() {
         return (
             <div>
-                <AdminLogin user={this.props.user} />
+                <AdminLogin />
                 <div>
                     {this.renderFileUploadButton()}
                     {this.state.images.map(image => (
                         <img className={classNames.image} src={image.image} key={image.id} alt=""
                             onClick={(event) => this.setState({ openImage : event.currentTarget.src }) } />
                     )).reverse()}
+                    <div className={classNames.loading}>
+                        <PropagateLoader color={'#dddddd'} loading={this.state.loading}  />
+                    </div>
                     {this.openModalImage()}
                 </div>
             </div>

@@ -1,16 +1,15 @@
 import * as React from 'react';
 import * as firebase from 'firebase';
 import * as keydown from 'react-keydown';
-const admin = require('../../images/admin.png');
-const classNames = require('./AdminLogin.css');
+const admin = require('../../../images/admin.png');
+const classNames = require('./adminLogin.css');
 const userLogin = 'garciandres.15@gmail.com';
 
 interface Props {
-    user: Object;
-    pwd?: string;
 }
 
 interface State {
+    user: Object;
     error: string;
 }
 
@@ -18,8 +17,16 @@ export class AdminLogin extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
+            user: null,
             error: null
         };
+    }
+
+    //Life cicle method launched when component is rendered in DOM (Firebase Listener).
+    componentWillMount() {
+        firebase.auth().onAuthStateChanged((user: Object) => {
+            this.setState({ user });
+        });
     }
 
     handleLoginKeyPress(event) {
@@ -56,7 +63,7 @@ export class AdminLogin extends React.Component<Props, State> {
 
     renderLoginButton() {
         //Check login status
-        if (this.props.user) {
+        if (this.state.user) {
             return (
                 <div className={classNames.loggedIn}>
                     <img className={classNames.urlPhoto} src={admin} alt="Admin" />
@@ -70,7 +77,7 @@ export class AdminLogin extends React.Component<Props, State> {
                     <em>{this.state.error}</em>
                     <div className="input-group">
                         <form onSubmit={this.handleAuth}>
-                            <input className="form-control" type="password" placeholder="Password" ref="password" id="password" /*onKeyPress={this.handleLoginKeyPress}*/ />
+                            <input className="form-control" type="password" placeholder="Password" ref="password" id="password" />
                             <input type="submit" className="btn" value="Sign in"/>
                         </form>
                     </div>

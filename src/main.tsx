@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as firebase from 'firebase';
 import './index.css';
-import { App } from "./app";
+import { AppRouter } from './router';
 
 //Firebase configuration
 firebase.initializeApp({
@@ -14,4 +14,4 @@ firebase.initializeApp({
     messagingSenderId: "806980862354"
 });
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<AppRouter />, document.getElementById('root'));

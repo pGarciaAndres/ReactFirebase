@@ -1,6 +1,6 @@
 import * as React from 'react';
-const addImage = require('../../images/add-image.png');
-const classNames = require('./FileUpload.css');
+const addImage = require('../../../images/add-image.png');
+const classNames = require('./fileUpload.css');
 
 interface Props {
     uploadValue: number;

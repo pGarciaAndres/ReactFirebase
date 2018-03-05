@@ -1,2 +1,3 @@
-export * from './authentication';
-export * from './gallery';
+export * from './header';
+export * from './body';
+export * from './footer';
