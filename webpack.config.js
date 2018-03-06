@@ -9,11 +9,10 @@ let basePath = __dirname;
 module.exports = {
   context: path.join(basePath, "src"),
   resolve: {
-    extensions: ['.js', '.css']
+    extensions: ['.js', '.ts', '.tsx', '.css']
   },
-
   entry: [
-    './index.js',
+    './main.tsx',
     '../node_modules/bootstrap/dist/css/bootstrap.css'
   ],
   output: {
@@ -30,21 +29,16 @@ module.exports = {
     port: 8080,
     stats: 'errors-only'
   },
+
   module: {
-    loaders: [
-      {
-        test: /\.js$/,
-        loader: 'babel-loader'
-      }
-    ],
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
+        loader: 'awesome-typescript-loader',
         options: {
-          presets: ['react']
-        }
+          useBabel: true,
+        },
       },
       {
         test: /\.css$/,
