@@ -1,5 +1,5 @@
 ## Why React?
-==========
+
 - Build huge application with information that change on time.
 - High performance when information upload thank to the Virtual DOM.
 - Easy reusable components.
@@ -7,13 +7,13 @@
 - Really is JavaScript so it is easy to learn.
 
 ## How start?
-==========
+
 * `npm install -g create-react-app`
 * `create-react-app reactFirebase`
 * `npm start`
 
 ## How start with Firebase?
-========================
+
 firebase.google.com
 Add new project.
 Install firebase in our project with npm.
