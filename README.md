@@ -18,15 +18,16 @@ Create a React application
 * `create-react-app reactFirebase`
 * `npm start`
 
-Visit https://console.firebase.google.com/
-Add new project.
-Install firebase in our project with npm.
+- Visit https://console.firebase.google.com/
+- Add new project.
+- Install firebase in our project with npm.
 * `npm install --save firebase`
-Import firebase in index.js file.
-Config:
-apiKey: "AIzaSyAvx2aAGLyy7fwebLHNakrUrarTVp-j-xw",
-authDomain: "reactfirebase-d23fe.firebaseapp.com",
-databaseURL: "https://reactfirebase-d23fe.firebaseio.com",
-projectId: "reactfirebase-d23fe",
-storageBucket: "reactfirebase-d23fe.appspot.com",
-messagingSenderId: "806980862354"
+- Import firebase in index.js file.
+
+## Config:
+- apiKey: "AIzaSyAvx2aAGLyy7fwebLHNakrUrarTVp-j-xw",
+- authDomain: "reactfirebase-d23fe.firebaseapp.com",
+- databaseURL: "https://reactfirebase-d23fe.firebaseio.com",
+- projectId: "reactfirebase-d23fe",
+- storageBucket: "reactfirebase-d23fe.appspot.com",
+- messagingSenderId: "806980862354"
