@@ -8,13 +8,17 @@
 
 ## How start?
 
+* `Clone project https://github.com/pGarciaAndres/reactFirebase.git`
+* `npm install`
+* `npm start`
+
+## How start with React & Firebase?
+Create a React application
 * `npm install -g create-react-app`
 * `create-react-app reactFirebase`
 * `npm start`
 
-## How start with Firebase?
-
-firebase.google.com
+Visit https://console.firebase.google.com/
 Add new project.
 Install firebase in our project with npm.
 * `npm install --save firebase`
