@@ -11,7 +11,7 @@ interface Props {
 
 interface State {
     user: Object;
-    albums: any[];
+    albumList: any[];
 }
 
 export class ImageGallery extends React.Component<Props, State> {
@@ -19,15 +19,33 @@ export class ImageGallery extends React.Component<Props, State> {
         super(props);
         this.state = {
             user: null,
-            albums: []
+            albumList: [],
         }
     }
 
     componentWillMount() {
         ReactModal.setAppElement('body');
+        // Authentication
         firebase.auth().onAuthStateChanged((user: Object) => {
             this.setState({ user });
         });
+        // Get album list from firebase
+        this.getAlbumList();
+    }
+
+    getAlbumList = () => {
+        let albumCollection = [];
+        firebase.database().ref('gallery').on('child_added', snapshot => {
+            const record = {
+                name: snapshot.key,
+            };
+            albumCollection.push(record);
+        });
+        return setTimeout(() => {
+            this.setState({
+                albumList: albumCollection,
+            });
+        }, 1500);   
     }
 
     handleCreateAlbum = (event) => {
@@ -60,9 +78,17 @@ export class ImageGallery extends React.Component<Props, State> {
                     {this.state.user && <AlbumManagement onCreate={this.handleCreateAlbum}/> }
                     <AdminLogin />
                 </div>
-                <div className={classNames.imageGalleryContainer}>
-                    <Album user={this.state.user} />
-                </div>
+                {/* One each item from albumList */}
+                {this.state.albumList.map(album => (
+                    <div className={classNames.imageGalleryContainer} key={album.name}>
+                        <Album user={this.state.user} album={this.state.albumList[0]} />
+                    </div>
+                ))}
+
+                {/* Without albumList */}
+                {/* <div className={classNames.imageGalleryContainer}>
+                    <Album user={this.state.user} album={this.state.albumList[0]} />
+                </div> */}
             </div>
         );
     }

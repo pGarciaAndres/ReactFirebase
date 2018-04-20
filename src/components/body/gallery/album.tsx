@@ -22,12 +22,13 @@ const customStyles = {
 };
 
 interface Props {
-    user: Object
+    user: Object,
+    album: Object,
 }
 
 interface State {
     uploadValue: number;
-    images: any[];
+    imageList: any[];
     openImage: string;
     loading: boolean;
 }
@@ -37,7 +38,7 @@ export class Album extends React.Component<Props, State> {
         super(props);
         this.state = {
             uploadValue: 0,
-            images: [],
+            imageList: [],
             openImage: null,
             loading: true
         }
@@ -45,6 +46,7 @@ export class Album extends React.Component<Props, State> {
 
     componentWillMount() {
         ReactModal.setAppElement('body');
+        // this.getImageListByAlbum(this.props.album);
         let imageCollection = [];
         firebase.database().ref('images').on('child_added', snapshot => {
             const record = {
@@ -56,18 +58,10 @@ export class Album extends React.Component<Props, State> {
         });
         return setTimeout(() => {
             this.setState({
-                images: imageCollection,
+                imageList: imageCollection,
                 loading: false,
             });
         }, 1500);
-    }
-
-    renderFileUploadButton = () => {
-        if (this.props.user && this.state.loading === false) {
-            return (
-                <FileUpload uploadValue={this.state.uploadValue} onUpload={this.handleUpload} />
-            );
-        }
     }
 
     handleUpload = (event) => {
@@ -96,12 +90,12 @@ export class Album extends React.Component<Props, State> {
                 const dbRef = firebase.database().ref('images');
                 const newImage = dbRef.push();
 
-                const prev = this.state.images.length;
+                const prev = this.state.imageList.length;
                 newImage.set(record);
-                const post = this.state.images.length;
+                const post = this.state.imageList.length;
                 if (post === prev) {
                     this.setState({
-                        images: this.state.images.concat(record)
+                        imageList: this.state.imageList.concat(record)
                     });
                 }
             });
@@ -134,7 +128,7 @@ export class Album extends React.Component<Props, State> {
                 snapshot.ref.remove();
                 this.setState({
                     openImage: null,
-                    images: this.state.images.filter(image => image.id !== file.id)
+                    imageList: this.state.imageList.filter(image => image.id !== file.id)
                 });
             });
         }
@@ -146,7 +140,7 @@ export class Album extends React.Component<Props, State> {
                 {this.props.user && this.state.loading === false && 
                     <FileUpload uploadValue={this.state.uploadValue} onUpload={this.handleUpload} />
                 }
-                {this.state.images.map(image => (
+                {this.state.imageList.map(image => (
                     <img className={classNames.image} src={image.image} key={image.id} alt=""
                         onClick={(event) => this.setState({ openImage : event.currentTarget.src }) } />
                 )).reverse()}

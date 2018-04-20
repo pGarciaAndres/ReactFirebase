@@ -33,7 +33,7 @@ export class AlbumManagement extends React.Component<Props, State> {
                             <input type="button" 
                                 className={this.state.showNewAlbumButton ? classNames.hidden : "btn"} 
                                 value="Cancel" 
-                                onClick={(e) => { this.setState({ albumName : "" }); this.setState({ showNewAlbumButton : true }); console.log(this.state.albumName) } }/>
+                                onClick={(e) => { this.setState({ albumName : "" }); this.setState({ showNewAlbumButton : true });} }/>
                             <input type="text" 
                                 className={this.state.showNewAlbumButton ? classNames.hiddenText : "form-control"} 
                                 value={this.state.albumName}
