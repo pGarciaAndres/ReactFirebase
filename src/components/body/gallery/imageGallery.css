@@ -1,52 +1,9 @@
-.loading {
-  display: inline-block;
-  padding-top: 6rem;
+.galleryToolsContainer {
+    width: 100%;
+    float: left;
 }
 
-.image {
-    width: 150px;
-    border-radius: 10px;
-    margin-left: 10px;
-    margin-bottom: 10px;
-    vertical-align: middle;
-    transition: width 0.4s, opacity 0.25s ease-in-out;
-    cursor: pointer;
-  }
-  
-  .image:hover {
-    width: 200px;
-    opacity: 0.8;
-  }
-
-  .imageZoom {
+.imageGalleryContainer {
     width: 100%;
-    border-radius: 10px;
-  }
-
-  .closeButton {
-    position: absolute;
-    width: 50px;
-    transform: rotate(45deg);
-    opacity: 0.3;
-    cursor: pointer;
-    transition: transform 0.2s linear;
-  }
-
-  .closeButton:hover {
-    transform: rotate(135deg);
-  }
-
-  .removeButton {
-    position: absolute;
-    margin-top: 60px;
-    margin-left: -2px;
-    width: 50px;
-    opacity: 0.45;
-    cursor: pointer;
-    transition: transform 0.2s linear;
-  }
-
-  .removeButton:hover {
-    transform: rotate(30deg);
-    filter: sepia(100%) saturate(10000%) hue-rotate(0deg);
-  }
+    float: left;
+}

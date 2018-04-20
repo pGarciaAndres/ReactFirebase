@@ -1,6 +1,5 @@
 import * as React from 'react';
 import * as firebase from 'firebase';
-import * as keydown from 'react-keydown';
 const admin = require('../../../images/admin.png');
 const classNames = require('./adminLogin.css');
 const userLogin = 'garciandres.15@gmail.com';
