@@ -1,3 +1,7 @@
+.imageListContainer {
+    padding-top: 6rem;
+}
+
 .loading {
     display: inline-block;
     padding-top: 6rem;
@@ -7,15 +11,14 @@
     width: 150px;
     border-radius: 10px;
     margin-left: 10px;
-    margin-bottom: 10px;
     vertical-align: middle;
-    transition: width 0.4s, opacity 0.25s ease-in-out;
+    transition: width 0.4s, opacity 0.25s ease-in-out, filter 0.25s ease-in-out;
     cursor: pointer;
 }
     
 .image:hover {
-    width: 200px;
-    opacity: 0.8;
+    filter: brightness(101%);
+    opacity: 0.7;
 }
 
 .imageZoom {
@@ -49,4 +52,8 @@
 .removeButton:hover {
     transform: rotate(30deg);
     filter: sepia(100%) saturate(10000%) hue-rotate(0deg);
+}
+
+hr {
+    margin: 1rem;
 }

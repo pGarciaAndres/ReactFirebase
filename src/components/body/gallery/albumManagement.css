@@ -38,7 +38,7 @@ form input[value=Cancel]:hover { /* Cancel */
 form input[type=text] { /* Album Name */
     border-radius: 0 !important;
     text-align: center;
-    transition: width 1.5s;
+    transition: width 1s;
     padding: 0 !important;
 }
 

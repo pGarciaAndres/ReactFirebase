@@ -3,7 +3,7 @@ import * as firebase from 'firebase';
 import * as ReactModal from 'react-modal';
 import { FileUpload } from "./fileUpload";
 import { PropagateLoader } from 'react-spinners';
-const classNames = require('./album.css');
+const classNames = require('./imageList.css');
 const addImage = require('../../../images/add-image.png');
 const removeImage = require('../../../images/rm-image.png');
 
@@ -23,7 +23,7 @@ const customStyles = {
 
 interface Props {
     user: Object,
-    album: Object,
+    albumImages: any[],
 }
 
 interface State {
@@ -33,7 +33,7 @@ interface State {
     loading: boolean;
 }
 
-export class Album extends React.Component<Props, State> {
+export class ImageList extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
@@ -46,16 +46,7 @@ export class Album extends React.Component<Props, State> {
 
     componentWillMount() {
         ReactModal.setAppElement('body');
-        // this.getImageListByAlbum(this.props.album);
-        let imageCollection = [];
-        firebase.database().ref('images').on('child_added', snapshot => {
-            const record = {
-                id: snapshot.val().id,
-                name: snapshot.val().name,
-                image: snapshot.val().image
-            };
-            imageCollection.push(record);
-        });
+        let imageCollection = this.props.albumImages ? this.props.albumImages : [];
         return setTimeout(() => {
             this.setState({
                 imageList: imageCollection,
@@ -136,8 +127,8 @@ export class Album extends React.Component<Props, State> {
 
     public render() {
         return (
-            <div>
-                {this.props.user && this.state.loading === false && 
+            <div className={classNames.imageListContainer}>
+                {this.props.user && this.state.loading === false &&
                     <FileUpload uploadValue={this.state.uploadValue} onUpload={this.handleUpload} />
                 }
                 {this.state.imageList.map(image => (
@@ -145,7 +136,7 @@ export class Album extends React.Component<Props, State> {
                         onClick={(event) => this.setState({ openImage : event.currentTarget.src }) } />
                 )).reverse()}
                 <div className={classNames.loading}>
-                    <PropagateLoader color={'#dddddd'} loading={this.state.loading}  />
+                    <PropagateLoader color={'#dddddd'} loading={this.state.loading} />
                 </div>
                 {this.openModalImage()}
             </div>
