@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as firebase from 'firebase';
 import * as ReactModal from 'react-modal';
+import { PropagateLoader } from 'react-spinners';
 import { AdminLogin } from "../authentication";
 import { ImageList } from './imageList';
 import { AlbumManagement } from './albumManagement';
@@ -14,6 +15,7 @@ interface State {
     user: Object;
     albumList: any[];
     imagesAlbumSelected: any[];
+    loading: boolean;
 }
 
 export class ImageGallery extends React.Component<Props, State> {
@@ -23,6 +25,7 @@ export class ImageGallery extends React.Component<Props, State> {
             user: null,
             albumList: [],
             imagesAlbumSelected: null,
+            loading: true,
         }
     }
 
@@ -48,8 +51,9 @@ export class ImageGallery extends React.Component<Props, State> {
         return setTimeout(() => {
             this.setState({
                 albumList: albumCollection,
+                loading: false,
             });
-        }, 1500);   
+        }, 1500);
     }
 
     getImagesFromAlbum = (albumName) => {
@@ -104,23 +108,28 @@ export class ImageGallery extends React.Component<Props, State> {
                     <AdminLogin />
                 </div>
                 {/* One each item from albumList */}
-                {this.state.albumList.map(album => (
-                    <div className={classNames.albumContainer} key={album.name}>
-                        <div className={classNames.album} onClick={() => {this.setState({ imagesAlbumSelected : album.images })} }
-                        style={{ backgroundImage: `url(${album.images[0].image})`, backgroundSize: 'cover', backgroundPosition: 'center center', backgroundRepeat: 'no-repeat'}}>
-                            <div className={classNames.darkLayer}>
-                                <span className={classNames.darkLayerText}>VIEW ALL</span>
+                {this.state.loading === false &&
+                    this.state.albumList.map(album => (
+                        <div className={classNames.albumContainer} key={album.name}>
+                            <div className={classNames.album} onClick={() => this.setState({ imagesAlbumSelected: album.images})}
+                            style={{ backgroundImage: 'url(' + album.images[0].image + ')', backgroundSize: 'cover', backgroundPosition: 'center center', backgroundRepeat: 'no-repeat'}}>
+                                <div className={classNames.darkLayer}>
+                                    <span className={classNames.darkLayerText}>VIEW ALL</span>
+                                </div>
+                                <div className={classNames.albumSummary}>
+                                    <span className={classNames.albumSize}>{album.images.length}</span>
+                                    <img className={classNames.albumSizeImg} src={albumSizeImg} alt="size" />
+                                </div>
                             </div>
-                            <div className={classNames.albumSummary}>
-                                <span className={classNames.albumSize}>{album.images.length}</span>
-                                <img className={classNames.albumSizeImg} src={albumSizeImg} alt="size" />
-                            </div>
+                            <span className={classNames.albumTitle}>{album.name}</span>
                         </div>
-                        <span className={classNames.albumTitle}>{album.name}</span>
-                    </div>
-                ))}
-                {this.state.imagesAlbumSelected && <ImageList user={this.state.user} albumImages={this.state.imagesAlbumSelected} /> }
+                    ))
+                }
+                {this.state.loading === false && <ImageList user={this.state.user} albumImages={this.state.imagesAlbumSelected} /> }
+                <div className={classNames.loading}>
+                    <PropagateLoader color={'#dddddd'} loading={this.state.loading} />
+                </div>
             </div>
-        );
+        )
     }
 }

@@ -46,13 +46,19 @@ export class ImageList extends React.Component<Props, State> {
 
     componentWillMount() {
         ReactModal.setAppElement('body');
-        let imageCollection = this.props.albumImages ? this.props.albumImages : [];
-        return setTimeout(() => {
-            this.setState({
-                imageList: imageCollection,
-                loading: false,
-            });
-        }, 1500);
+        let imageCollection = this.props.albumImages;
+        this.setState({
+            imageList: imageCollection,
+            loading: false,
+        });
+    }
+
+    componentWillReceiveProps(newProps) {
+        let imageCollection = newProps.albumImages;
+        this.setState({
+            imageList: imageCollection,
+            loading: false,
+        });
     }
 
     handleUpload = (event) => {
@@ -94,19 +100,19 @@ export class ImageList extends React.Component<Props, State> {
     }
 
     openModalImage = () => {
-            return (
-                <ReactModal
-                    isOpen={this.state.openImage !== null}
-                    onRequestClose={() => this.setState({ openImage : null}) } onUpload={this.handleRemove}
-                    style={customStyles}
-                    contentLabel="Image Modal">
-                    <img className={classNames.imageZoom} src={this.state.openImage} alt="" />
-                    <img className={classNames.closeButton} src={addImage} alt="Close" onClick={() => this.setState({ openImage : null}) } />
-                    {this.props.user &&
-                        <img className={classNames.removeButton} src={removeImage} alt="Eliminar" onClick={this.handleRemove} />
-                    }
-                </ReactModal>
-            );
+        return (
+            <ReactModal
+                isOpen={this.state.openImage !== null}
+                onRequestClose={() => this.setState({ openImage : null}) } onUpload={this.handleRemove}
+                style={customStyles}
+                contentLabel="Image Modal">
+                <img className={classNames.imageZoom} src={this.state.openImage} alt="" />
+                <img className={classNames.closeButton} src={addImage} alt="Close" onClick={() => this.setState({ openImage : null}) } />
+                {this.props.user &&
+                    <img className={classNames.removeButton} src={removeImage} alt="Eliminar" onClick={this.handleRemove} />
+                }
+            </ReactModal>
+        );
     }
 
     handleRemove = () => {
@@ -126,21 +132,34 @@ export class ImageList extends React.Component<Props, State> {
     }
 
     public render() {
-        return (
-            <div className={classNames.imageListContainer}>
-                {this.props.user && this.state.loading === false &&
-                    <FileUpload uploadValue={this.state.uploadValue} onUpload={this.handleUpload} />
-                }
-                {this.state.imageList.map(image => (
-                    <img className={classNames.image} src={image.image} key={image.id} alt=""
-                        onClick={(event) => this.setState({ openImage : event.currentTarget.src }) } />
-                )).reverse()}
-                <div className={classNames.loading}>
-                    <PropagateLoader color={'#dddddd'} loading={this.state.loading} />
+        if (this.state.imageList === null) {
+            return  (
+                <div className={classNames.imageListContainer}>
+                    <h2>Select one album to load images.</h2>
                 </div>
-                {this.openModalImage()}
-            </div>
-        )
+            )
+        } else if (this.state.imageList.length === 0) {
+            return  (
+                <div className={classNames.imageListContainer}>
+                    <h2>This album is empty.</h2>
+                </div>
+            )
+        } else {
+            return (
+                <div className={classNames.imageListContainer}>
+                    {this.props.user && this.state.loading === false &&
+                        <FileUpload uploadValue={this.state.uploadValue} onUpload={this.handleUpload} />
+                    }
+                    {this.state.imageList.map(image => (
+                        <img className={classNames.image} src={image.image} key={image.id} alt=""
+                            onClick={(event) => this.setState({ openImage : event.currentTarget.src }) } />
+                    )).reverse()}
+                    <div className={classNames.loading}>
+                        <PropagateLoader color={'#dddddd'} loading={this.state.loading} />
+                    </div>
+                    {this.openModalImage()}
+                </div>
+            )
+        }
     }
-
 }
