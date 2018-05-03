@@ -1,11 +1,9 @@
 import * as React from 'react';
 import * as firebase from 'firebase';
 import * as ReactModal from 'react-modal';
-import { PropagateLoader } from 'react-spinners';
 import { AdminLogin } from "../authentication";
-import { ImageList } from './imageList';
-import { AlbumManagement } from './albumManagement';
-const albumSizeImg = require('../../../images/albumSizeImg.png');
+import { AlbumManagement, AlbumList, ImageList} from './index';
+import { PropagateLoader } from 'react-spinners';
 const classNames = require('./imageGallery.css');
 
 interface Props {
@@ -14,6 +12,7 @@ interface Props {
 interface State {
     user: Object;
     albumList: any[];
+    nameAlbumSelected: string;
     imagesAlbumSelected: any[];
     loading: boolean;
 }
@@ -24,6 +23,7 @@ export class ImageGallery extends React.Component<Props, State> {
         this.state = {
             user: null,
             albumList: [],
+            nameAlbumSelected: null,
             imagesAlbumSelected: null,
             loading: true,
         }
@@ -56,7 +56,7 @@ export class ImageGallery extends React.Component<Props, State> {
         }, 1500);
     }
 
-    getImagesFromAlbum = (albumName) => {
+    getImagesFromAlbum = (albumName: string) => {
         let imageCollection = [];
         firebase.database().ref(`gallery/${albumName}`).on('child_added', snapshot => {
             const record = {
@@ -104,31 +104,15 @@ export class ImageGallery extends React.Component<Props, State> {
         return (
             <div className={classNames.imageGalleryContainer}>
                 <div className={classNames.galleryToolsContainer}>
-                    {this.state.user && <AlbumManagement onCreate={this.handleCreateAlbum}/> }
+                    {this.state.user && <AlbumManagement onCreate={this.handleCreateAlbum} />}
                     <AdminLogin />
                 </div>
-                {/* One each item from albumList */}
                 {this.state.loading === false &&
-                    this.state.albumList.map(album => (
-                        <div className={classNames.albumContainer} key={album.name}>
-                            <div className={classNames.album} onClick={() => this.setState({ imagesAlbumSelected: album.images})}
-                            style={{ backgroundImage: 'url(' + album.images[0].image + ')', backgroundSize: 'cover', backgroundPosition: 'center center', backgroundRepeat: 'no-repeat'}}>
-                                <div className={classNames.darkLayer}>
-                                    <span className={classNames.darkLayerText}>VIEW ALL</span>
-                                </div>
-                                <div className={classNames.albumSummary}>
-                                    <span className={classNames.albumSize}>{album.images.length}</span>
-                                    <img className={classNames.albumSizeImg} src={albumSizeImg} alt="size" />
-                                </div>
-                            </div>
-                            <span className={classNames.albumTitle}>{album.name}</span>
-                        </div>
-                    ))
+                    <AlbumList albumList={this.state.albumList} onSelectAlbum={(album) => this.setState({nameAlbumSelected: album.name, imagesAlbumSelected: album.images})} />
                 }
-                {this.state.loading === false && <ImageList user={this.state.user} albumImages={this.state.imagesAlbumSelected} /> }
-                <div className={classNames.loading}>
-                    <PropagateLoader color={'#dddddd'} loading={this.state.loading} />
-                </div>
+                {this.state.loading === false &&
+                    <ImageList user={this.state.user} albumName={this.state.nameAlbumSelected} albumImages={this.state.imagesAlbumSelected} updateAlbum={() => this.setState({albumList: this.state.albumList})} />
+                }
             </div>
         )
     }

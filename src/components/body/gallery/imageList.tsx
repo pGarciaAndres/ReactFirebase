@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as firebase from 'firebase';
 import * as ReactModal from 'react-modal';
-import { FileUpload } from "./fileUpload";
+import { FileUpload } from './index';
 import { PropagateLoader } from 'react-spinners';
 const classNames = require('./imageList.css');
 const addImage = require('../../../images/add-image.png');
@@ -23,11 +23,14 @@ const customStyles = {
 
 interface Props {
     user: Object,
+    albumName: string,
     albumImages: any[],
+    updateAlbum: () => void,
 }
 
 interface State {
     uploadValue: number;
+    album: string;
     imageList: any[];
     openImage: string;
     loading: boolean;
@@ -38,6 +41,7 @@ export class ImageList extends React.Component<Props, State> {
         super(props);
         this.state = {
             uploadValue: 0,
+            album: null,
             imageList: [],
             openImage: null,
             loading: true
@@ -46,27 +50,31 @@ export class ImageList extends React.Component<Props, State> {
 
     componentWillMount() {
         ReactModal.setAppElement('body');
+        let nameCollection = this.props.albumName;
         let imageCollection = this.props.albumImages;
         this.setState({
+            album: nameCollection,
             imageList: imageCollection,
             loading: false,
         });
     }
 
     componentWillReceiveProps(newProps) {
+        let nameCollection = newProps.albumName;
         let imageCollection = newProps.albumImages;
         this.setState({
+            album: nameCollection,
             imageList: imageCollection,
             loading: false,
         });
     }
 
-    handleUpload = (event) => {
+    handleUploadImage = (event) => {
         if (event && event.currentTarget && event.currentTarget.files.length) {
             //Get the file from the event.
             const file = event.currentTarget.files[0];
             //Receive the reference.
-            const storageRef = firebase.storage().ref(`/images/${file.name}`);
+            const storageRef = firebase.storage().ref(`/gallery/${this.state.album}/${file.name}`);
             //Task to upload the file to Firebase.
             const task = storageRef.put(file);
             //Firebase utility to receive the file status.
@@ -77,24 +85,20 @@ export class ImageList extends React.Component<Props, State> {
                 });
             }, error => {
                 console.log(error.message);
-            }, () => { //Image already uploaded.
+            }, () => {
                 const record = {
                     id: task.snapshot.metadata.generation,
                     name: task.snapshot.metadata.name,
                     image: task.snapshot.downloadURL
                 };
 
-                const dbRef = firebase.database().ref('images');
+                const dbRef = firebase.database().ref(`gallery/${this.state.album}`);
                 const newImage = dbRef.push();
-
-                const prev = this.state.imageList.length;
                 newImage.set(record);
-                const post = this.state.imageList.length;
-                if (post === prev) {
-                    this.setState({
-                        imageList: this.state.imageList.concat(record)
-                    });
-                }
+                this.setState({
+                    imageList: this.props.albumImages
+                });
+                this.props.updateAlbum();
             });
         }
     }
@@ -148,7 +152,7 @@ export class ImageList extends React.Component<Props, State> {
             return (
                 <div className={classNames.imageListContainer}>
                     {this.props.user && this.state.loading === false &&
-                        <FileUpload uploadValue={this.state.uploadValue} onUpload={this.handleUpload} />
+                        <FileUpload uploadValue={this.state.uploadValue} onUpload={this.handleUploadImage} />
                     }
                     {this.state.imageList.map(image => (
                         <img className={classNames.image} src={image.image} key={image.id} alt=""

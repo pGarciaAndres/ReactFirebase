@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Navigation } from "./navigation";
+import { Navigation } from './index';
 const classNames = require('./header.css');
 const logo = require('../../images/logo.png');
 
