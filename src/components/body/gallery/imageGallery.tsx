@@ -78,26 +78,18 @@ export class ImageGallery extends React.Component<Props, State> {
             };
             this.setState({
                 albumList: [record].concat(this.state.albumList),
+                nameAlbumSelected: record.name,
+                imagesAlbumSelected: record.images,
             });
-
-            // var file = new File([albumName], albumName+".png", {
-            //     type: "image/png",
-            // });
-            // const storageRef = firebase.storage().ref(`gallery/${albumName}`);
-            // const task = storageRef.put(file);
-            // task.on(firebase.storage.TaskEvent.STATE_CHANGED, snapshot => {
-            //     let percentage = (task.snapshot.bytesTransferred /task.snapshot.totalBytes) * 100;
-            // }, error => {
-            //     console.log(error.message);
-            // }, () => {
-            //     const album = {
-            //         albumName: task.snapshot.metadata.name
-            //     };
-            //     const dbRef = firebase.database().ref(`gallery/${albumName}`);
-            //     const newAlbum = dbRef.push();
-            //     newAlbum.set(album);
-            // });
         }
+    }
+
+    updateAlbum = (update) => {
+        this.state.albumList.find(image => image.name === this.state.nameAlbumSelected).images = update;
+        this.setState({
+            albumList: this.state.albumList,
+            imagesAlbumSelected: update,
+        })
     }
 
     public render() {
@@ -111,7 +103,7 @@ export class ImageGallery extends React.Component<Props, State> {
                     <AlbumList albumList={this.state.albumList} onSelectAlbum={(album) => this.setState({nameAlbumSelected: album.name, imagesAlbumSelected: album.images})} />
                 }
                 {this.state.loading === false &&
-                    <ImageList user={this.state.user} albumName={this.state.nameAlbumSelected} albumImages={this.state.imagesAlbumSelected} updateAlbum={() => this.setState({albumList: this.state.albumList})} />
+                    <ImageList user={this.state.user} numberAlbums={this.state.albumList.length} albumName={this.state.nameAlbumSelected} albumImages={this.state.imagesAlbumSelected} updateAlbum={(update) => this.updateAlbum(update)} />
                 }
             </div>
         )

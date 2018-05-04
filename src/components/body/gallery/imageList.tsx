@@ -23,9 +23,10 @@ const customStyles = {
 
 interface Props {
     user: Object,
+    numberAlbums: number,
     albumName: string,
     albumImages: any[],
-    updateAlbum: () => void,
+    updateAlbum: (update) => void,
 }
 
 interface State {
@@ -94,11 +95,15 @@ export class ImageList extends React.Component<Props, State> {
 
                 const dbRef = firebase.database().ref(`gallery/${this.state.album}`);
                 const newImage = dbRef.push();
+
+                const before = this.props.albumImages.length;
                 newImage.set(record);
+                const after = this.props.albumImages.length;
+                const newAlbumImages = (before === after) ? this.props.albumImages.concat(record) : this.props.albumImages;
                 this.setState({
-                    imageList: this.props.albumImages
+                    imageList: newAlbumImages
                 });
-                this.props.updateAlbum();
+                this.props.updateAlbum(newAlbumImages);
             });
         }
     }
@@ -136,7 +141,13 @@ export class ImageList extends React.Component<Props, State> {
     }
 
     public render() {
-        if (this.state.imageList === null) {
+        if (this.props.numberAlbums === 0) {
+            return  (
+                <div className={classNames.imageListContainer}>
+                    <h2>Create a new album to start.</h2>
+                </div>
+            )
+        } else if (this.state.imageList === null) {
             return  (
                 <div className={classNames.imageListContainer}>
                     <h2>Select one album to load images.</h2>
@@ -146,6 +157,10 @@ export class ImageList extends React.Component<Props, State> {
             return  (
                 <div className={classNames.imageListContainer}>
                     <h2>This album is empty.</h2>
+                    {this.props.user && <h4>Insert an image to save a new album.</h4>}
+                    {this.props.user && this.state.loading === false &&
+                        <FileUpload uploadValue={this.state.uploadValue} onUpload={this.handleUploadImage} />
+                    }
                 </div>
             )
         } else {

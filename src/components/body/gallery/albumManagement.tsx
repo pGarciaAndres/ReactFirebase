@@ -21,11 +21,18 @@ export class AlbumManagement extends React.Component<Props, State> {
         }
     }
 
+    resetNewAlbumButton = () => {
+        this.setState({
+            albumName: '',
+            showNewAlbumButton: true,
+        })
+    }
+
     public render() {
         return (
             <div className={classNames.manageContainer}>
                 <div className={classNames.manageButtons}>
-                        <form onSubmit={this.props.onCreate}>
+                        <form onSubmit={(e) => {this.resetNewAlbumButton(); this.props.onCreate(e)}}>
                             <input type="button" 
                                 className={this.state.showNewAlbumButton ? "btn" : classNames.hidden} 
                                 value="New Album" 
@@ -33,7 +40,7 @@ export class AlbumManagement extends React.Component<Props, State> {
                             <input type="button" 
                                 className={this.state.showNewAlbumButton ? classNames.hidden : "btn"} 
                                 value="Cancel" 
-                                onClick={(e) => { this.setState({ albumName : "" }); this.setState({ showNewAlbumButton : true });} }/>
+                                onClick={() => { this.setState({ albumName : "" }); this.setState({ showNewAlbumButton : true });} }/>
                             <input type="text" 
                                 className={this.state.showNewAlbumButton ? classNames.hiddenText : "form-control"} 
                                 value={this.state.albumName}
