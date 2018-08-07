@@ -6,4 +6,6 @@ cd reactFirebase
 
 npm install
 
+npm run build (Compile with webpack)
+
 npm start
