@@ -27,6 +27,7 @@ export default class ImageGallery extends React.Component {
 
         this.state = {
             uploadValue: 0,
+            albums: [],
             images: [],
             openImage: null
         };
@@ -42,12 +43,16 @@ export default class ImageGallery extends React.Component {
         firebase.auth().onAuthStateChanged(user => {
             //Awesome ES6 Syntax: If user == new user, will not change and eoc will be overwrited.
             this.setState({ user });
-          });
+        });
         Modal.setAppElement('body');
-        firebase.database().ref('images').on('child_added', snapshot => {
-            this.setState({
-                images: this.state.images.concat(snapshot.val())
-            });
+        firebase.database().ref('gallery').on('child_added', snapshot => {
+            // let albums = [];
+            let newAlbum = {
+                name: snapshot.key,
+                images: snapshot.val()
+            };
+            // albums.push(newAlbum);
+            this.setState({ albums: this.state.albums.concat(newAlbum)});
         });
     }
 
@@ -84,9 +89,7 @@ export default class ImageGallery extends React.Component {
     
                 const dbRef = firebase.database().ref('images');
                 const newImage = dbRef.push();
-                // newImage.set(record);
-
-                //Chapuza - After login and upload an image don't refresh image list, but the image is uploaded.
+                
                 const prev = this.state.images.length;
                 newImage.set(record);
                 const post = this.state.images.length;
@@ -95,7 +98,6 @@ export default class ImageGallery extends React.Component {
                         images: this.state.images.concat(record)
                     });
                 }
-                //end Chapuza
             });
         }
     }
@@ -157,10 +159,21 @@ export default class ImageGallery extends React.Component {
                 <AdminLogin user={ this.props.user } />
                 <div>
                     { this.renderFileUploadButton() }
-                    { this.state.images.map(image => ( 
-                        <img className={classNames.image} src={ image.image } key={ image.id } alt="" 
-                        onClick={ this.openImage } />
-                    )).reverse() }
+
+                    { this.state.albums.map(album => (
+                        <div id="album">
+                            <div id="albumTitle" key={album.name}>
+                                <span>{album.name}</span>
+                            </div>
+                            <div id="albumImages">
+                                { album.images.map(image => (
+                                    <img className={classNames.image} src={ image.image } key={ image.id } alt="" 
+                                    onClick={ this.openImage } />
+                                )).reverse() }
+                            </div>
+                        </div>
+                    )) }
+
                     { this.openModalImage() }
                 </div>
             </div>
