@@ -27,7 +27,6 @@ export default class ImageGallery extends React.Component {
 
         this.state = {
             uploadValue: 0,
-            albums: [],
             images: [],
             openImage: null
         };
@@ -45,14 +44,10 @@ export default class ImageGallery extends React.Component {
             this.setState({ user });
         });
         Modal.setAppElement('body');
-        firebase.database().ref('gallery').on('child_added', snapshot => {
-            // let albums = [];
-            let newAlbum = {
-                name: snapshot.key,
-                images: snapshot.val()
-            };
-            // albums.push(newAlbum);
-            this.setState({ albums: this.state.albums.concat(newAlbum)});
+        firebase.database().ref('images').on('child_added', snapshot => {
+            this.setState({
+                images: this.state.images.concat(snapshot.val())
+            });
         });
     }
 
@@ -160,19 +155,10 @@ export default class ImageGallery extends React.Component {
                 <div>
                     { this.renderFileUploadButton() }
 
-                    { this.state.albums.map(album => (
-                        <div id="album">
-                            <div id="albumTitle" key={album.name}>
-                                <span>{album.name}</span>
-                            </div>
-                            <div id="albumImages">
-                                { album.images.map(image => (
-                                    <img className={classNames.image} src={ image.image } key={ image.id } alt="" 
-                                    onClick={ this.openImage } />
-                                )).reverse() }
-                            </div>
-                        </div>
-                    )) }
+                    { this.state.images.map(image => ( 
+                        <img className={classNames.image} src={ image.image } key={ image.id } alt="" 
+                        onClick={ this.openImage } />
+                    )).reverse() }
 
                     { this.openModalImage() }
                 </div>
