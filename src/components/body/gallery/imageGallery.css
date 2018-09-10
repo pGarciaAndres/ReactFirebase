@@ -3,6 +3,7 @@
     float: left;
     position: relative;
     z-index: 0;
+    min-height: 700px;
 }
 
 .galleryToolsContainer {
