@@ -2,10 +2,10 @@
 
 Clone the project: https://github.com/pGarciaAndres/reactFirebase.git
 
-cd reactFirebase
+    cd reactFirebase
 
-npm install
+    npm install
 
-npm run build (Compile with webpack)
+    npm run build (Compile with webpack)
 
-npm start
+    npm start
