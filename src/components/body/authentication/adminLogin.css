@@ -1,0 +1,55 @@
+.loginContainer {
+    float: right;
+    width: 50%;
+}
+
+.loggedIn {
+    padding: 1rem 1rem 1rem 0;
+    float: right;
+}
+
+.loggedIn button {
+    margin-left: .5rem !important;
+    padding: 0 .5rem 0 .5rem !important;
+    transition: opacity 0.15s ease-in-out;
+}
+
+.loggedIn button:hover {
+    opacity: 0.8;
+}
+
+.notLoggedIn {
+    padding: 0 1rem 1rem 0;
+    float: right;
+}
+
+form {
+    display: flex !important;
+}
+
+form input[type=password] {
+    border-radius: 0.25rem 0rem 0rem 0.25rem !important;
+}
+
+form input[type=submit] {
+    border-radius: 0rem 0.25rem 0.25rem 0rem !important;
+    transition: opacity 0.15s ease-in-out;
+}
+
+form input[type=submit]:hover {
+    opacity: 0.8;
+}
+  
+.urlPhoto {
+    width: 2.5rem;
+    vertical-align: bottom;
+    padding-right: 5px;
+}
+
+em {
+    text-align: left;
+    display: inline-block;
+    color: #D8000C;
+    font-size: smaller;
+    width: 100%;
+}

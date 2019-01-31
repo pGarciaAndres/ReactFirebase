@@ -1,0 +1,71 @@
+.manageContainer {
+    float: left;
+    width: 50%;
+}
+
+.manageButtons {
+    padding: 1.5rem 0rem 1rem 1rem;
+    float: left;
+    width: 25rem;
+}
+
+input[value='New Album'] { /* New Album */
+    border-radius: 0.25rem !important;
+    transition: opacity 0.15s ease-in-out;
+}
+
+input[value='New Album']:hover { /* New Album */
+    opacity: 0.8;
+}
+
+form { /* Form */
+    display: flex !important;
+}
+
+.hidden { /* Form */
+    display: none;
+}
+
+form input[value=Cancel] { /* Cancel */
+    border-radius: 0.25rem 0rem 0rem 0.25rem !important;
+    transition: opacity 0.15s ease-in-out;
+}
+
+form input[value=Cancel]:hover { /* Cancel */
+    opacity: 0.8;
+}
+
+form input[type=text] { /* Album Name */
+    border-radius: 0 !important;
+    text-align: center;
+    transition: width 1s;
+    padding: 0 !important;
+}
+
+form input[type=text]:focus { /* Album Name */
+    border-color: #dddddd;
+    box-shadow: none;
+}
+
+.hiddenText { /* Album Name */
+    width: 0%;
+    border: none;
+    -webkit-text-fill-color: transparent;
+}
+
+.hiddenText::placeholder { /* Album Name */
+    color: transparent;
+}
+
+form button[type=submit] { /* Ok */
+    border-radius: 0rem 0.25rem 0.25rem 0rem !important;
+}
+
+.submitAlbumImg { /* Ok */
+    width: 20px;
+}
+
+
+
+
+

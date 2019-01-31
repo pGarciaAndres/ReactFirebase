@@ -1,0 +1,25 @@
+.logo {
+    animation: logoSpin infinite 20s linear;
+    height: 5rem;
+  }
+  
+.header {
+    background-color: #222;
+    height: 10rem;
+    padding: 2rem;
+    color: white;
+}
+  
+.title {
+    font-size: 1.5em;
+}
+
+@keyframes logoSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+ol, ul, dl {
+    margin-top: 0;
+    margin-bottom: 0rem !important;
+}

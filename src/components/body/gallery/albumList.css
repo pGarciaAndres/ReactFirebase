@@ -1,0 +1,77 @@
+.albumContainer {
+    width: 210px;
+    margin-right: 5px;
+    display: inline-block;
+    vertical-align: top;
+    white-space: normal;
+    text-align: left;
+}
+
+.album {
+    width: 210px;
+    display: inline-block;
+    vertical-align: top;
+    white-space: normal;
+    background-color: #efefef;
+    position: relative;
+    height: 118px;
+    cursor: pointer;
+    z-index: 3;
+}
+
+.album:hover {
+    background-size: 110% !important;
+}
+
+.darkLayer {
+    background: #00000075;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    z-index: 1;
+}
+
+.darkLayer:hover {
+    opacity: 1;
+}
+
+.darkLayerText {
+    line-height: 118px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding-left: 10%;
+    z-index: 2;
+    color: white;
+}
+
+.albumSummary {
+    width: 40%;
+    background-color: #00000078;
+    position: relative;
+    float: right;
+    height: 100%;
+    text-align: center;
+    z-index: 0;
+}
+
+.albumSize {
+    color: white;
+    line-height: 110px;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.albumSizeImg {
+    width: 30px;
+    padding-bottom: 5px;
+    filter: invert(100%);
+}
+
+.albumTitle {
+    display: block;
+    overflow: hidden;
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.6rem;
+}
