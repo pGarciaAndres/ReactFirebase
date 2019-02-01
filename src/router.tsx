@@ -6,8 +6,8 @@ import { Home, News, ImageGallery, Contact, About } from './components';
 export const AppRouter: React.StatelessComponent<{}> = () => {
     return (
         <Router history={hashHistory}>
-            <Route path="/" component={App}>
-                <IndexRoute component={Home} />
+            <Route path="/gallery" component={App}>
+                <IndexRoute component={ImageGallery} />
                 <Route path="/home" component={Home} />
                 <Route path="/news" component={News} />
                 <Route path="/gallery" component={ImageGallery} />
