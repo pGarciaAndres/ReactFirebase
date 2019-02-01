@@ -11,9 +11,9 @@ export const Navigation = () => {
     return (
         <div>
             <ul>
-                <li><Link to="/" onlyActiveOnIndex activeClassName={classNames.active}>Home</Link></li>
+                <li><Link to="/" onlyActiveOnIndex activeClassName={classNames.active}>Gallery</Link></li>
+                <li><Link to="/home" onlyActiveOnIndex activeClassName={classNames.active}>Home</Link></li>
                 <li><Link to="/news" activeClassName={classNames.active}>News</Link></li>
-                <li><Link to="/gallery" activeClassName={classNames.active}>Gallery</Link></li>
                 <li><Link to="/contact" activeClassName={classNames.active}>Contact</Link></li>
                 <li className={classNames.right}><Link to="/about" activeClassName={classNames.active}>About</Link></li>
             </ul>
